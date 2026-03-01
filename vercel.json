@@ -1,12 +1,5 @@
 {
-  "name": "social-analytics-dashboard",
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
   "env": {
     "N8N_API_URL": "https://n8n.superseller.agency/api/v1",
     "WHATSAPP_API_URL": "http://172.245.56.50:3000",

@@ -20,7 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans antialiased min-h-screen bg-background`}
+        className={`${inter.variable} font-sans antialiased min-h-screen`}
+        style={{ backgroundColor: 'hsl(var(--background))' }}
       >
         {children}
       </body>

@@ -57,30 +57,31 @@ export async function GET(request: NextRequest) {
     // Calculate summary statistics
     const summary = {
       totalPosts: posts.length,
-      totalEngagement: posts.reduce((sum, post) => sum + post.totalEngagement, 0),
+      totalEngagement: posts.reduce((sum: number, post) => sum + post.totalEngagement, 0),
       averageEngagement: posts.length > 0 ? 
-        posts.reduce((sum, post) => sum + post.totalEngagement, 0) / posts.length : 0,
+        posts.reduce((sum: number, post) => sum + post.totalEngagement, 0) / posts.length : 0,
       platforms: {
         facebook: {
           posts: posts.filter(p => p.platform === 'FACEBOOK').length,
-          engagement: posts.filter(p => p.platform === 'FACEBOOK').reduce((sum, post) => sum + post.totalEngagement, 0)
+          engagement: posts.filter(p => p.platform === 'FACEBOOK').reduce((sum: number, post) => sum + post.totalEngagement, 0)
         },
         instagram: {
           posts: posts.filter(p => p.platform === 'INSTAGRAM').length,
-          engagement: posts.filter(p => p.platform === 'INSTAGRAM').reduce((sum, post) => sum + post.totalEngagement, 0)
+          engagement: posts.filter(p => p.platform === 'INSTAGRAM').reduce((sum: number, post) => sum + post.totalEngagement, 0)
         }
       }
     }
 
     // Calculate engagement advantage
+    let engagementAdvantage = 0
     if (summary.platforms.facebook.posts > 0 && summary.platforms.instagram.posts > 0) {
       const fbAvg = summary.platforms.facebook.engagement / summary.platforms.facebook.posts
       const igAvg = summary.platforms.instagram.engagement / summary.platforms.instagram.posts
-      summary.engagementAdvantage = ((igAvg / fbAvg) - 1) * 100
+      engagementAdvantage = ((igAvg / fbAvg) - 1) * 100
     }
 
     return NextResponse.json({
-      summary,
+      summary: { ...summary, engagementAdvantage },
       posts: posts.slice(0, 50), // Limit to recent 50 posts
       metrics,
       crossPlatformData: crossPlatformData.slice(0, 30) // Limit to recent 30 days
@@ -126,8 +127,8 @@ export async function POST(request: NextRequest) {
         const fbPosts = posts.filter(p => p.platform === 'FACEBOOK')
         const igPosts = posts.filter(p => p.platform === 'INSTAGRAM')
 
-        const fbEngagement = fbPosts.reduce((sum, post) => sum + post.totalEngagement, 0)
-        const igEngagement = igPosts.reduce((sum, post) => sum + post.totalEngagement, 0)
+        const fbEngagement = fbPosts.reduce((sum: number, post) => sum + post.totalEngagement, 0)
+        const igEngagement = igPosts.reduce((sum: number, post) => sum + post.totalEngagement, 0)
 
         const today = new Date()
         today.setHours(0, 0, 0, 0)

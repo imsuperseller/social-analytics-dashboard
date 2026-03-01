@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model SocialPost {
+  id                String   @id @default(cuid())
+  postId            String   @unique
+  platform          Platform
+  type              ContentType
+  caption           String?
+  mediaUrl          String?
+  permalink         String?
+  timestamp         DateTime
+  likes             Int      @default(0)
+  comments          Int      @default(0)
+  shares            Int      @default(0)
+  totalEngagement   Int      @default(0)
+  hashtags          Int      @default(0)
+  mentions          Int      @default(0)
+  themes            String[] @default([])
+  extractedAt       DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("social_posts")
+}
+
+model EngagementMetrics {
+  id              String   @id @default(cuid())
+  platform        Platform
+  date            DateTime
+  totalPosts      Int
+  totalLikes      Int
+  totalComments   Int
+  totalShares     Int
+  avgEngagement   Float
+  topContentType  ContentType?
+  bestHour        Int?
+  bestDay         String?
+  engagementRate  Float?
+  createdAt       DateTime @default(now())
+
+  @@unique([platform, date])
+  @@map("engagement_metrics")
+}
+
+model ScheduledPost {
+  id            String      @id @default(cuid())
+  platform      Platform
+  content       String
+  mediaUrls     String[]    @default([])
+  scheduledFor  DateTime
+  status        ScheduleStatus @default(PENDING)
+  publishedAt   DateTime?
+  publishedId   String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("scheduled_posts")
+}
+
+model NotificationSettings {
+  id                    String  @id @default(cuid())
+  whatsappEnabled       Boolean @default(true)
+  whatsappNumber        String?
+  engagementThreshold   Int     @default(100)
+  dailyReportEnabled    Boolean @default(true)
+  weeklyReportEnabled   Boolean @default(true)
+  alertOnLowPerformance Boolean @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("notification_settings")
+}
+
+model CrossPlatformAnalytics {
+  id                     String   @id @default(cuid())
+  date                   DateTime @unique
+  facebookPosts          Int      @default(0)
+  facebookEngagement     Int      @default(0)
+  facebookAvgEngagement  Float    @default(0)
+  instagramPosts         Int      @default(0)
+  instagramEngagement    Int      @default(0)
+  instagramAvgEngagement Float    @default(0)
+  engagementAdvantage    Float    @default(0)
+  topPlatform           Platform?
+  recommendations       String[] @default([])
+  createdAt             DateTime @default(now())
+
+  @@map("cross_platform_analytics")
+}
+
+enum Platform {
+  FACEBOOK
+  INSTAGRAM
+}
+
+enum ContentType {
+  PHOTO
+  VIDEO
+  TEXT
+  LINK
+  STORY
+  REEL
+}
+
+enum ScheduleStatus {
+  PENDING
+  PUBLISHED
+  FAILED
+  CANCELLED
+}

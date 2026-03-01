@@ -1,0 +1,21 @@
+{
+  "name": "social-analytics-dashboard",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "N8N_API_URL": "https://n8n.superseller.agency/api/v1",
+    "WHATSAPP_API_URL": "http://172.245.56.50:3000",
+    "WHATSAPP_API_KEY": "4fc7e008d7d24fc995475029effc8fa8"
+  },
+  "regions": ["iad1"],
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
+}

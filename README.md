@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Social Analytics Dashboard
+
+Unified cross-platform social media analytics and content management system.
+
+## Features
+
+- **Real-time Analytics**: Live engagement tracking across Facebook and Instagram
+- **Content Management**: Schedule posts with optimal timing recommendations
+- **Cross-Platform Insights**: Unified analytics showing platform performance comparison
+- **WhatsApp Notifications**: Automated alerts and reports via WhatsApp Pro
+- **N8N Integration**: Direct workflow management and trigger capabilities
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with TypeScript
+- **Database**: PostgreSQL with Prisma ORM
+- **UI**: Tailwind CSS with shadcn/ui components
+- **Charts**: Recharts for data visualization
+- **Authentication**: NextAuth.js
+
+## Key Integrations
+
+- **N8N Workflows**: 
+  - Facebook Analytics: `R2z4uMg9xXzmgxA6`
+  - Instagram Integration: `mh7iPzRyOtFXDdJ4`
+- **WhatsApp Pro**: Real-time notifications via webhook
+- **Facebook Graph API**: Social media data collection
+
+## Performance Insights
+
+- Instagram shows 36.1% higher engagement than Facebook
+- Optimal posting times:
+  - Facebook: Tuesday 14:00
+  - Instagram: Sunday 18:00
+- Automated analytics eliminate manual tasks
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone and Install**:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Configure Environment**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your credentials
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Setup Database**:
+   ```bash
+   npx prisma migrate dev
+   npx prisma generate
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Run Development**:
+   ```bash
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+- `DATABASE_URL`: PostgreSQL connection string
+- `N8N_API_URL`: N8N instance API endpoint
+- `WHATSAPP_API_URL`: WhatsApp Pro webhook URL
+- `FACEBOOK_APP_ID/SECRET`: Facebook Graph API credentials
 
-To learn more about Next.js, take a look at the following resources:
+## Dashboard Views
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Overview**: Real-time metrics and today's schedule
+- **Analytics**: Deep-dive performance analysis
+- **Content Manager**: Post scheduling and calendar
+- **Performance**: Cross-platform comparison
+- **WhatsApp**: Notification management
+- **Settings**: System configuration
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Development
 
-## Deploy on Vercel
+Dashboard is running at [http://localhost:3001](http://localhost:3001)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built for automated social media strategy optimization.
